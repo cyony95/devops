@@ -1,0 +1,31 @@
+---
+- hosts: localhost
+  connection: local  
+  gather_facts: yes
+  become: yes
+  become_user: root
+  tasks:
+    - name: build web1 image
+      docker_image:
+        name: web1
+        tag: v1.0
+        build:
+          path: ./docker/web1
+        source: build
+        state: present
+    - name: build web2 image
+      docker_image:
+        name: web2:v1.0
+        tag: v1.0
+        build:
+          path: ./docker/web2
+        source: build
+        state: present
+    - name: build loadbalancer
+      docker_image:
+        name: loadbalancer
+        tag: v1.0
+        build:
+          path: ./docker/loadbalancer
+        source: build
+        state: present

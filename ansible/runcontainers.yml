@@ -1,0 +1,32 @@
+---
+- hosts: localhost
+  connection: local  
+  gather_facts: yes
+  become: yes
+  become_user: root
+  tasks:
+  - name: Start web1
+    docker_container:
+      name: web1container
+      image: web1:v1.0
+      state: started
+      interactive: yes
+      ports:
+      - "8888:80"
+  - name: Start web2
+    docker_container:
+      name: web2container
+      image: web2:v1.0
+      state: started
+      interactive: yes
+      ports:
+      - "8889:80"
+  - name: Start loadbalancer
+    docker_container:
+      name: loadbalancercontainer
+      image: loadbalancer:v1.0
+      state: started
+      interactive: yes
+      ports:
+      - "8080:8080"
+      
